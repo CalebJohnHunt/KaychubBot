@@ -1,0 +1,12 @@
+﻿{
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "TelegramHook": {
+            "commandName": "Project",
+            "applicationUrl": "http://localhost:8433",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+    }
+}
