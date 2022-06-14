@@ -3,7 +3,6 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.Bot.Types.Enums;
-using System.Text;
 
 class TelegramBot
 {
@@ -51,6 +50,7 @@ class TelegramBot
                         switch (q.step)
                         {
                             case 0:
+                                await AnswerCallbackQueryEmpty(botClient, update.CallbackQuery.Id);
                                 await BeginGame(botClient, update.CallbackQuery.From.Id);
                                 break;
                             case 1:
@@ -68,9 +68,14 @@ class TelegramBot
         }
     }
 
+    static async Task AnswerCallbackQueryEmpty(ITelegramBotClient botClient, string queryId)
+    {
+        await botClient.AnswerCallbackQueryAsync(queryId);
+    }
+
     static async Task TellResults(ITelegramBotClient botClient, string queryId, long userId, QueryData q)
     {
-        var ans = botClient.AnswerCallbackQueryAsync(queryId, "Loading results");
+        var ans = AnswerCallbackQueryEmpty(botClient, queryId);
 
         var possibleDoors = new List<byte> { 0, 1, 2 };
         possibleDoors.Remove(q.doorUsed);
@@ -102,7 +107,7 @@ class TelegramBot
 
     static async Task GiveOption(ITelegramBotClient botClient, string queryId, long userId, QueryData q)
     {
-        var ans = botClient.AnswerCallbackQueryAsync(queryId);
+        var ans = AnswerCallbackQueryEmpty(botClient, queryId);
 
         var possibleDoors = new List<byte> { 0, 1, 2 };
         possibleDoors.Remove(q.doorUsed);
