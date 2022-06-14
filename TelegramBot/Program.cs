@@ -88,6 +88,16 @@ class TelegramBot
 
         await ans;
         await cho;
+
+        InlineKeyboardMarkup inlineKeyboard = new(new[]
+        {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Play again", q.Step(0).ToString())
+            }
+        });
+
+        await botClient.SendTextMessageAsync(userId, "Play again?", replyMarkup: inlineKeyboard);
     }
 
     static async Task GiveOption(ITelegramBotClient botClient, string queryId, long userId, QueryData q)
